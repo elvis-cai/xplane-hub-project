@@ -232,3 +232,55 @@ spec:
     - type: FromCompositeFieldPath
       fromFieldPath: status.vcluster.kubernetesProviderName
       toFieldPath: spec.providerConfigRef.name
+
+  - name: argocd-resources
+    base:
+      apiVersion: kubernetes.crossplane.io/v1alpha1
+      kind: Object
+      spec:
+        forProvider:
+          manifest:
+            apiVersion: argoproj.io/v1alpha1
+            kind: Application
+            metadata:
+              name: developer-apps-in-app
+              namespace: argocd
+            spec:
+              destination:
+                namespace: argocd
+                server: https://kubernetes.default.svc
+              project: default
+              source:
+                directory:
+                  recurse: true
+                  include: '*.yaml'
+                repoURL: https://github.com/elvis-cai/xplane-tenant-project.git
+                targetRevision: HEAD
+                path: team1
+              syncPolicy:
+                automated:
+                  selfHeal: true
+                  prune: true
+                retry:
+                  backoff:
+                    duration: 30s
+                    factor: 2
+                    maxDuration: 5m0s
+                  limit: 10
+                syncOptions:
+                  - CreateNamespace=true
+    patches:
+    - type: FromCompositeFieldPath
+      fromFieldPath: metadata.name
+      toFieldPath: metadata.name
+      transforms:
+      - type: string
+        string:
+          fmt: "%s-developer-argocd-application"
+    - type: FromCompositeFieldPath
+      fromFieldPath: status.vcluster.kubernetesProviderName
+      toFieldPath: spec.providerConfigRef.name
+    - type: FromCompositeFieldPath
+      fromFieldPath: metadata.name
+      toFieldPath: spec.forProvider.manifest.spec.source.path
+
