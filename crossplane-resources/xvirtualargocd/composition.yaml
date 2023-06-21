@@ -281,6 +281,6 @@ spec:
       fromFieldPath: status.vcluster.kubernetesProviderName
       toFieldPath: spec.providerConfigRef.name
     - type: FromCompositeFieldPath
-      fromFieldPath: metadata.name
+      fromFieldPath: metadata.labels[tenant]
       toFieldPath: spec.forProvider.manifest.spec.source.path
 
