@@ -37,10 +37,10 @@ spec:
           name: default
     patches:
     - type: FromCompositeFieldPath
-      fromFieldPath: metadata.name
+      fromFieldPath: metadata.labels[crossplane.io/claim-name]
       toFieldPath: spec.forProvider.namespace
     - type: FromCompositeFieldPath
-      fromFieldPath: metadata.name
+      fromFieldPath: metadata.labels[crossplane.io/claim-name]
       toFieldPath: metadata.name
       transforms:
       - type: string
@@ -49,8 +49,8 @@ spec:
     - type: CombineFromComposite
       combine:
         variables:
-        - fromFieldPath: metadata.name
-        - fromFieldPath: metadata.name
+        - fromFieldPath: metadata.labels[crossplane.io/claim-name]
+        - fromFieldPath: metadata.labels[crossplane.io/claim-name]
         strategy: string
         string:
           fmt: "--out-kube-config-server=https://%s-vcluster.%s.svc.cluster.local"
@@ -58,8 +58,8 @@ spec:
     - type: CombineFromComposite
       combine:
         variables:
-        - fromFieldPath: metadata.name
-        - fromFieldPath: metadata.name
+        - fromFieldPath: metadata.labels[crossplane.io/claim-name]
+        - fromFieldPath: metadata.labels[crossplane.io/claim-name]
         strategy: string
         string:
           fmt: "--tls-san=%s-vcluster.%s.svc.cluster.local"
@@ -80,7 +80,7 @@ spec:
           name: kubernetes-provider
     patches:
     - type: FromCompositeFieldPath
-      fromFieldPath: metadata.name
+      fromFieldPath: metadata.labels[crossplane.io/claim-name]
       toFieldPath: metadata.name
   - name: provider-config-helm-vcluster
     base:
@@ -97,13 +97,13 @@ spec:
           source: Secret
     patches:
     - type: FromCompositeFieldPath
-      fromFieldPath: metadata.name
+      fromFieldPath: metadata.labels[crossplane.io/claim-name]
       toFieldPath: metadata.name
     - type: FromCompositeFieldPath
-      fromFieldPath: metadata.name
+      fromFieldPath: metadata.labels[crossplane.io/claim-name]
       toFieldPath: spec.credentials.secretRef.namespace
     - type: ToCompositeFieldPath
-      fromFieldPath: metadata.name
+      fromFieldPath: metadata.labels[crossplane.io/claim-name]
       toFieldPath: status.vcluster.helmProviderName
     readinessChecks:
       - type: None
@@ -135,7 +135,7 @@ spec:
                 - --disable-auth
     patches:
     - type: FromCompositeFieldPath
-      fromFieldPath: metadata.name
+      fromFieldPath: metadata.labels[crossplane.io/claim-name]
       toFieldPath: metadata.name
       transforms:
       - type: string
@@ -168,17 +168,17 @@ spec:
             namespace: foo
     patches:
     - type: FromCompositeFieldPath
-      fromFieldPath: metadata.name
+      fromFieldPath: metadata.labels[crossplane.io/claim-name]
       toFieldPath: metadata.name
       transforms:
       - type: string
         string:
           fmt: "%s-kubernetes-provider"
     - type: FromCompositeFieldPath
-      fromFieldPath: metadata.name
+      fromFieldPath: metadata.labels[crossplane.io/claim-name]
       toFieldPath: spec.credentials.secretRef.namespace
     - type: ToCompositeFieldPath
-      fromFieldPath: metadata.name
+      fromFieldPath: metadata.labels[crossplane.io/claim-name]
       toFieldPath: status.vcluster.kubernetesProviderName
     readinessChecks:
       - type: None
@@ -223,7 +223,7 @@ spec:
           name: foo
     patches:
     - type: FromCompositeFieldPath
-      fromFieldPath: metadata.name
+      fromFieldPath: metadata.labels[crossplane.io/claim-name]
       toFieldPath: metadata.name
       transforms:
       - type: string
@@ -271,7 +271,7 @@ spec:
                   - CreateNamespace=true
     patches:
     - type: FromCompositeFieldPath
-      fromFieldPath: metadata.name
+      fromFieldPath: metadata.labels[crossplane.io/claim-name]
       toFieldPath: metadata.name
       transforms:
       - type: string
