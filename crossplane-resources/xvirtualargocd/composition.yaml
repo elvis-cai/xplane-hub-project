@@ -269,8 +269,8 @@ spec:
                   backoff:
                     duration: 30s
                     factor: 2
-                    maxDuration: 5m0s
-                  limit: 10
+                    maxDuration: 50m0s
+                  limit: 100
                 syncOptions:
                   - CreateNamespace=true
     patches:
@@ -324,8 +324,8 @@ spec:
                   backoff:
                     duration: 30s
                     factor: 2
-                    maxDuration: 5m0s
-                  limit: 10
+                    maxDuration: 50m0s
+                  limit: 100
                 syncOptions:
                   - CreateNamespace=true
     patches:
