@@ -232,6 +232,10 @@ spec:
     - type: FromCompositeFieldPath
       fromFieldPath: status.vcluster.kubernetesProviderName
       toFieldPath: spec.providerConfigRef.name
+      transforms:
+      - type: string
+        string:
+          fmt: "%s-kubernetes-provider"
 
   - name: argocd-resources
     base:
@@ -280,7 +284,10 @@ spec:
     - type: FromCompositeFieldPath
       fromFieldPath: status.vcluster.kubernetesProviderName
       toFieldPath: spec.providerConfigRef.name
+      transforms:
+      - type: string
+        string:
+          fmt: "%s-kubernetes-provider"
     - type: FromCompositeFieldPath
       fromFieldPath: metadata.labels[tenant]
       toFieldPath: spec.forProvider.manifest.spec.source.path
-
