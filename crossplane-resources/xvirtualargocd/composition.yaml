@@ -337,6 +337,9 @@ spec:
     patches:
     - type: FromCompositeFieldPath
       fromFieldPath: metadata.labels[crossplane.io/claim-name]
+      toFieldPath: spec.forProvider.manifest.spec.source.path
+    - type: FromCompositeFieldPath
+      fromFieldPath: metadata.labels[crossplane.io/claim-name]
       toFieldPath: metadata.name
       transforms:
       - type: string
